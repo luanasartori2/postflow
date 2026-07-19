@@ -1,0 +1,39 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function signedIn() {
+      return request.auth != null;
+    }
+    function me() {
+      return firestore.get(
+        /databases/(default)/documents/users/$(request.auth.uid)
+      ).data;
+    }
+    function activeIn(agencyId) {
+      return signedIn()
+        && me().agencyId == agencyId
+        && (!('status' in me()) || me().status == 'active');
+    }
+    function isAdmin(agencyId) {
+      return activeIn(agencyId) && me().role in ['admin', 'owner'];
+    }
+    function isBootstrapOwner(agencyId) {
+      return signedIn()
+        && firestore.get(
+          /databases/(default)/documents/agencies/$(agencyId)
+        ).data.ownerUid == request.auth.uid;
+    }
+    function isMember(agencyId) {
+      return activeIn(agencyId)
+        && me().role in ['admin', 'owner', 'collaborator', 'viewer_interno', 'viewer', 'client'];
+    }
+
+    match /agencies/{agencyId}/branding/{fileName} {
+      allow read: if isMember(agencyId);
+      allow create, update: if (isBootstrapOwner(agencyId) || isAdmin(agencyId))
+        && request.resource.size < 2 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+      allow delete: if isAdmin(agencyId);
+    }
+  }
+}

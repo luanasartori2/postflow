@@ -1,0 +1,179 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+    function hasUser() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+    function me() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+    function activeIn(agencyId) {
+      return hasUser()
+        && me().agencyId == agencyId
+        && (!('status' in me()) || me().status == 'active');
+    }
+    function isAdmin(agencyId) {
+      return activeIn(agencyId) && me().role in ['admin', 'owner'];
+    }
+    function isCollaborator(agencyId) {
+      return activeIn(agencyId) && me().role == 'collaborator';
+    }
+    function isViewer(agencyId) {
+      return activeIn(agencyId) && me().role in ['viewer_interno', 'viewer'];
+    }
+    function isInternal(agencyId) {
+      return isAdmin(agencyId) || isCollaborator(agencyId) || isViewer(agencyId);
+    }
+    function isClient(agencyId) {
+      return activeIn(agencyId) && me().role == 'client';
+    }
+    function inviteMatches(inviteId, role, agencyId) {
+      return exists(/databases/$(database)/documents/invites/$(inviteId))
+        && get(/databases/$(database)/documents/invites/$(inviteId)).data.email == request.auth.token.email
+        && get(/databases/$(database)/documents/invites/$(inviteId)).data.agencyId == agencyId
+        && get(/databases/$(database)/documents/invites/$(inviteId)).data.role == role
+        && get(/databases/$(database)/documents/invites/$(inviteId)).data.status == 'pending';
+    }
+    function legacyClientInviteMatches(agencyId, clientId) {
+      return exists(/databases/$(database)/documents/invites/$(request.auth.token.email))
+        && get(/databases/$(database)/documents/invites/$(request.auth.token.email)).data.agencyId == agencyId
+        && get(/databases/$(database)/documents/invites/$(request.auth.token.email)).data.clientId == clientId;
+    }
+    function revisionLimit(agencyId) {
+      return get(/databases/$(database)/documents/agencies/$(agencyId))
+        .data.get('approval', {}).get('revisionLimit', 3);
+    }
+    function commentsAllowed(agencyId) {
+      return get(/databases/$(database)/documents/agencies/$(agencyId))
+        .data.get('approval', {}).get('allowClientComments', true);
+    }
+
+    match /users/{uid} {
+      allow read: if signedIn() && (
+        request.auth.uid == uid
+        || (isAdmin(resource.data.agencyId) && resource.data.agencyId == me().agencyId)
+      );
+
+      allow create: if signedIn() && request.auth.uid == uid && (
+        (
+          request.resource.data.role == 'admin'
+          && get(/databases/$(database)/documents/agencies/$(request.resource.data.agencyId)).data.ownerUid == uid
+        )
+        || (
+          request.resource.data.role in ['collaborator', 'viewer_interno', 'client']
+          && inviteMatches(
+            request.resource.data.inviteId,
+            request.resource.data.role,
+            request.resource.data.agencyId
+          )
+        )
+        || (
+          request.resource.data.role == 'client'
+          && legacyClientInviteMatches(
+            request.resource.data.agencyId,
+            request.resource.data.clientId
+          )
+        )
+      );
+
+      allow update: if signedIn() && (
+        (
+          request.auth.uid == uid
+          && request.resource.data.agencyId == resource.data.agencyId
+          && (
+            request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name', 'updatedAt'])
+            || (
+              resource.data.role == 'owner'
+              && request.resource.data.role == 'admin'
+              && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['role', 'name', 'status', 'updatedAt'])
+            )
+            || (
+              resource.data.role == 'viewer'
+              && request.resource.data.role == 'viewer_interno'
+              && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['role', 'name', 'status', 'updatedAt'])
+            )
+          )
+        )
+        || (
+          isAdmin(resource.data.agencyId)
+          && request.resource.data.agencyId == resource.data.agencyId
+          && request.auth.uid != uid
+          && request.resource.data.role in ['admin', 'collaborator', 'viewer_interno', 'client']
+        )
+      );
+    }
+
+    match /invites/{inviteId} {
+      allow create: if isAdmin(request.resource.data.agencyId)
+        && request.resource.data.role in ['collaborator', 'viewer_interno', 'client'];
+      allow read: if signedIn() && (
+        request.auth.token.email == resource.data.email
+        || request.auth.token.email == inviteId
+        || isAdmin(resource.data.agencyId)
+      );
+      allow update: if signedIn() && (
+        isAdmin(resource.data.agencyId)
+        || (
+          request.auth.token.email == resource.data.email
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'acceptedAt', 'acceptedUid'])
+          && request.resource.data.status == 'accepted'
+        )
+      );
+      allow delete: if isAdmin(resource.data.agencyId);
+    }
+
+    match /agencies/{agencyId} {
+      allow create: if signedIn() && request.resource.data.ownerUid == request.auth.uid;
+      allow read: if isInternal(agencyId) || isClient(agencyId);
+      allow update: if isAdmin(agencyId);
+      allow delete: if isAdmin(agencyId) && request.auth.uid == resource.data.ownerUid;
+
+      match /clients/{clientId} {
+        allow read: if isInternal(agencyId)
+          || (isClient(agencyId) && me().clientId == clientId);
+        allow create, update: if isAdmin(agencyId);
+        allow delete: if isAdmin(agencyId);
+      }
+
+      match /events/{eventId} {
+        allow read: if isInternal(agencyId)
+          || (isClient(agencyId) && resource.data.clientId == me().clientId);
+        allow create: if isAdmin(agencyId) || isCollaborator(agencyId);
+        allow delete: if isAdmin(agencyId);
+        allow update: if isAdmin(agencyId)
+          || isCollaborator(agencyId)
+          || (
+            isClient(agencyId)
+            && resource.data.clientId == me().clientId
+            && request.resource.data.diff(resource.data).affectedKeys()
+              .hasOnly(['status', 'comments', 'statusChangedAt', 'revisionCount'])
+            && (
+              (
+                request.resource.data.status == 'aprovado'
+                && request.resource.data.get('revisionCount', 0) == resource.data.get('revisionCount', 0)
+                && request.resource.data.diff(resource.data).affectedKeys()
+                  .hasOnly(['status', 'statusChangedAt'])
+              )
+              || (
+                request.resource.data.status == 'ajuste'
+                && request.resource.data.get('revisionCount', 0) == resource.data.get('revisionCount', 0) + 1
+                && request.resource.data.get('revisionCount', 0) <= revisionLimit(agencyId)
+                && request.resource.data.diff(resource.data).affectedKeys()
+                  .hasOnly(['status', 'statusChangedAt', 'revisionCount'])
+              )
+              || (
+                request.resource.data.status == resource.data.status
+                && commentsAllowed(agencyId)
+                && request.resource.data.diff(resource.data).affectedKeys()
+                  .hasOnly(['comments'])
+              )
+            )
+          );
+      }
+    }
+  }
+}
