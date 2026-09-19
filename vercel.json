@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/webhook-kiwify.js": {
+      "memory": 256
+    }
+  }
+}
