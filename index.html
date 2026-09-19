@@ -311,6 +311,65 @@ body{font-family:'Inter',sans-serif;background:var(--bg-grad) fixed;color:var(--
 .drive-card .btn-primary,.drive-card .btn-ghost{margin-top:auto;align-self:flex-start;}
 .drive-icon{width:34px;height:30px;flex-shrink:0;}
 .settings-actions{display:flex;align-items:center;gap:7px;}
+
+/* ═══ IMPORTAR PAUTA COM IA ═══ */
+.btn-ai{padding:8px 16px;border-radius:7px;border:none;background:var(--grad);color:#fff;font-family:'Inter',sans-serif;font-size:.79rem;font-weight:500;cursor:pointer;transition:all .15s;letter-spacing:.03em;white-space:nowrap;}
+.btn-ai:hover{filter:brightness(1.07);box-shadow:0 3px 12px rgba(124,58,237,.25);}
+.btn-ai:disabled{opacity:.55;cursor:not-allowed;}
+.ai-modal{width:min(920px,96vw);max-height:92vh;overflow:auto;}
+.ai-step{display:none;}
+.ai-step.active{display:block;}
+.ai-drop{border:1.5px dashed var(--border-d);border-radius:12px;background:var(--sand-p);padding:22px 18px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s;margin-bottom:14px;}
+.ai-drop:hover,.ai-drop.dragover{border-color:#a855f7;background:#f5f0ff;}
+.ai-drop b{display:block;font-size:.88rem;color:var(--ink);margin-bottom:4px;}
+.ai-drop span{font-size:.74rem;color:var(--ink-mu);}
+.ai-file-name{font-size:.78rem;color:var(--teal);margin-top:8px;display:none;}
+.ai-or{text-align:center;font-size:.72rem;color:var(--ink-l);letter-spacing:.08em;text-transform:uppercase;margin:4px 0 12px;}
+#aiText{min-height:140px;resize:vertical;}
+.ai-preview-meta{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+.ai-preview-meta p{font-size:.78rem;color:var(--ink-mu);}
+.ai-preview-hint{font-size:.72rem;color:var(--ink-mu);margin-bottom:10px;}
+.ai-preview-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-bottom:14px;}
+.ai-day{min-height:92px;background:var(--cream);border:1px solid var(--border);border-radius:8px;padding:6px;display:flex;flex-direction:column;gap:4px;}
+.ai-day.empty{opacity:.45;background:transparent;}
+.ai-day.drop-target{border-color:#a855f7;background:#f5f0ff;}
+.ai-day-num{font-size:.68rem;font-weight:600;color:var(--ink-mu);}
+.ai-card{background:var(--white);border:1px solid var(--border);border-left:3px solid #a855f7;border-radius:6px;padding:5px 6px;cursor:grab;font-size:.65rem;line-height:1.25;color:var(--ink);box-shadow:var(--sh-sm);}
+.ai-card:active{cursor:grabbing;}
+.ai-card .fmt{display:block;font-size:.58rem;color:var(--ink-mu);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px;}
+.ai-list{display:flex;flex-direction:column;gap:8px;max-height:220px;overflow:auto;margin-bottom:8px;}
+.ai-list-item{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;padding:10px 12px;background:var(--cream);border:1px solid var(--border);border-radius:8px;}
+.ai-list-item b{display:block;font-size:.8rem;color:var(--ink);font-weight:600;}
+.ai-list-item span{font-size:.7rem;color:var(--ink-mu);}
+.ai-err{background:rgba(180,50,50,.08);border:1px solid rgba(180,50,50,.2);border-radius:var(--r-sm);padding:10px 14px;font-size:.81rem;color:#9a3030;margin-bottom:12px;display:none;}
+@media(max-width:760px){
+  .ai-preview-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .toolbar-r .btn-ai{padding:7px 10px;font-size:.72rem;}
+}
+
+/* ═══ GESTÃO DE CLIENTES ═══ */
+.client-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.client-filter{padding:6px 12px;border-radius:100px;border:1px solid var(--border-d);background:var(--cream);color:var(--ink-mu);font-family:'Inter',sans-serif;font-size:.74rem;cursor:pointer;transition:all .15s;}
+.client-filter:hover{color:var(--teal);border-color:var(--teal);}
+.client-filter.active{background:var(--teal-l);color:var(--teal);border-color:rgba(124,58,237,.25);font-weight:500;}
+.client-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);}
+.client-row:last-child{border-bottom:none;}
+.client-row-info{min-width:0;flex:1;}
+.client-row-info b{display:block;font-size:.84rem;color:var(--ink);font-weight:600;}
+.client-row-info span{font-size:.7rem;color:var(--ink-mu);}
+.badge-archived{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:100px;background:#f1f1f5;color:#6b6b94;font-size:.62rem;font-weight:500;vertical-align:middle;}
+.client-menu-wrap{position:relative;}
+.btn-more{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--white);color:var(--ink-mu);cursor:pointer;font-size:1rem;line-height:1;display:flex;align-items:center;justify-content:center;}
+.btn-more:hover{color:var(--teal);border-color:var(--teal);}
+.client-menu{display:none;position:absolute;right:0;top:36px;min-width:160px;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:var(--sh-md);padding:6px;z-index:20;}
+.client-menu.open{display:flex;flex-direction:column;gap:2px;}
+.client-menu button{border:none;background:transparent;text-align:left;padding:9px 12px;border-radius:7px;font-family:'Inter',sans-serif;font-size:.78rem;color:var(--ink-m);cursor:pointer;}
+.client-menu button:hover{background:var(--sand-p);color:var(--ink);}
+.client-menu button.danger{color:#9a3030;}
+.client-menu button.danger:hover{background:#fef2f2;}
+.delete-warn{font-size:.84rem;color:var(--ink-m);line-height:1.5;margin-bottom:16px;}
+.delete-warn b{color:var(--ink);}
+#clientModalExtra{display:none;margin-top:4px;padding-top:12px;border-top:1px solid var(--border);}
 .report-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:22px;}
 .settings-box{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:14px;max-width:560px;}
 .settings-box h3{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;margin-bottom:10px;color:var(--ink);}
@@ -604,6 +663,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg-grad) fixed;color:var(--
       <div class="sb-sec" id="sb-actions-sec">
         <div class="sb-lbl">Ações</div>
         <div class="sb-item" onclick="openModal(null)">Novo Conteúdo</div>
+        <div class="sb-item" id="sb-ai-import" onclick="openAiImport()">Importar pauta com IA</div>
         <div class="sb-item" onclick="window.print()">Imprimir</div>
       </div>
     </aside>
@@ -662,6 +722,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg-grad) fixed;color:var(--
           </div>
           <div class="toolbar-r">
             <button class="btn-ghost" onclick="window.print()">Imprimir</button>
+            <button class="btn-ai" onclick="openAiImport()">Importar pauta com IA</button>
             <button class="btn-primary" onclick="openModal(null)">＋ Novo Conteúdo</button>
           </div>
         </div>
@@ -677,6 +738,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg-grad) fixed;color:var(--
             <button class="btn-mo" onclick="changeMonth(1)">→</button>
           </div>
           <div class="toolbar-r">
+            <button class="btn-ai" onclick="openAiImport()">Importar pauta com IA</button>
             <button class="btn-primary" onclick="openModal(null)">＋ Novo Conteúdo</button>
           </div>
         </div>
@@ -793,10 +855,28 @@ body{font-family:'Inter',sans-serif;background:var(--bg-grad) fixed;color:var(--
       <input class="fi" id="cDriveUrl" type="url" placeholder="https://drive.google.com/drive/folders/...">
       <div style="font-size:.67rem;color:var(--ink-l);margin-top:5px">Cole o link da pasta do Google Drive deste cliente.</div>
     </div>
+    <div id="clientModalExtra">
+      <button class="btn-ghost" type="button" id="btnArchiveFromModal" onclick="archiveClientFromModal()">Arquivar cliente</button>
+    </div>
     <div class="modal-actions">
       <span class="saving-lbl" id="clientSavingLbl">Salvando…</span>
       <button class="btn-cancel" onclick="closeClientModal()">Cancelar</button>
       <button class="btn-save" id="btnSaveClient" onclick="saveClient()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL EXCLUIR CLIENTE -->
+<div class="overlay" id="deleteClientOverlay">
+  <div class="modal" style="width:440px">
+    <div class="modal-hd">
+      <div class="modal-ttl">Excluir cliente</div>
+      <button class="btn-x" onclick="closeDeleteClient()">✕</button>
+    </div>
+    <p class="delete-warn" id="deleteClientWarn">Tem certeza? Esta ação não pode ser desfeita. Todo o histórico será perdido.</p>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeDeleteClient()">Cancelar</button>
+      <button class="btn-del" id="btnConfirmDeleteClient" onclick="confirmDeleteClient()">Excluir permanentemente</button>
     </div>
   </div>
 </div>
@@ -822,6 +902,51 @@ body{font-family:'Inter',sans-serif;background:var(--bg-grad) fixed;color:var(--
   </div>
 </div>
 
+<!-- MODAL IMPORTAR PAUTA COM IA -->
+<div class="overlay" id="aiImportOverlay">
+  <div class="modal ai-modal">
+    <div class="modal-hd">
+      <div class="modal-ttl" id="aiModalTitle">Importar pauta com IA</div>
+      <button class="btn-x" onclick="closeAiImport()">✕</button>
+    </div>
+    <div class="ai-err" id="aiImportErr"></div>
+
+    <div class="ai-step active" id="aiStepInput">
+      <div class="ai-drop" id="aiDropZone" onclick="document.getElementById('aiFileInput').click()">
+        <b>Arraste um arquivo ou clique para selecionar</b>
+        <span>Formatos aceitos: .txt, .docx ou .pdf</span>
+        <div class="ai-file-name" id="aiFileName"></div>
+      </div>
+      <input type="file" id="aiFileInput" accept=".txt,.docx,.pdf,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="display:none" onchange="handleAiFile(this.files[0])">
+      <div class="ai-or">ou cole o texto</div>
+      <div class="fg"><label class="fl">Conteúdo da pauta</label><textarea class="fi" id="aiText" placeholder="Cole aqui as ideias de conteúdo, briefing ou pauta…"></textarea></div>
+      <div class="frow">
+        <div class="fg"><label class="fl">Posts por semana</label><input class="fi" id="aiPostsPerWeek" type="number" min="1" max="21" value="3"></div>
+        <div class="fg"><label class="fl">Mês de distribuição</label><input class="fi" id="aiMonth" type="month"></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeAiImport()">Cancelar</button>
+        <button class="btn-save" id="btnGenerateAi" onclick="generateAiCalendar()">Gerar calendário</button>
+      </div>
+    </div>
+
+    <div class="ai-step" id="aiStepPreview">
+      <div class="ai-preview-meta">
+        <p id="aiPreviewMeta"></p>
+        <button class="btn-ghost" type="button" onclick="backToAiInput()">← Ajustar entrada</button>
+      </div>
+      <p class="ai-preview-hint">Arraste os cards entre os dias para ajustar as datas antes de salvar.</p>
+      <div class="cal-wds"><div class="cal-wd">Dom</div><div class="cal-wd">Seg</div><div class="cal-wd">Ter</div><div class="cal-wd">Qua</div><div class="cal-wd">Qui</div><div class="cal-wd">Sex</div><div class="cal-wd">Sáb</div></div>
+      <div class="ai-preview-grid" id="aiPreviewGrid"></div>
+      <div class="ai-list" id="aiPreviewList"></div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeAiImport()">Cancelar</button>
+        <button class="btn-save" id="btnConfirmAi" onclick="confirmAiCalendar()">Confirmar e salvar no calendário</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- APPROVAL MODAL -->
 <div class="overlay" id="approvalOverlay">
   <div class="modal approval-modal" id="approvalContent"></div>
@@ -832,12 +957,15 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebas
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, updatePassword } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { getFirestore, collection, addDoc, getDocs, getDoc, setDoc, doc, updateDoc, deleteDoc, query, where, orderBy, arrayUnion } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-storage.js";
+import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-functions.js";
 
 const FC={apiKey:"AIzaSyCpwXLrKkd74v7QH1knW2a4_WRdnhgBKes",authDomain:"stratta-7b849.firebaseapp.com",projectId:"stratta-7b849",storageBucket:"stratta-7b849.firebasestorage.app",messagingSenderId:"774547755088",appId:"1:774547755088:web:7af2ea0b12f9d2c1298155"};
 const fbApp=initializeApp(FC);
 const auth=getAuth(fbApp);
 const db=getFirestore(fbApp);
 const storage=getStorage(fbApp);
+const functions=getFunctions(fbApp,'us-central1');
+const generatePautaCalendarFn=httpsCallable(functions,'generatePautaCalendar');
 
 const MONTHS=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 const DAYS=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
@@ -850,10 +978,12 @@ const CLIENT_COLORS=['#0ea5e9','#a855f7','#ec4899','#f59e0b','#10b981','#6366f1'
 
 let events=[],clients=[],yr=new Date().getFullYear(),mo=new Date().getMonth();
 let activeClientId=null,view='calendar',fstatus='all';
-let editingId=null,editingClientId=null,detailId=null;
+let editingId=null,editingClientId=null,detailId=null,deletingClientId=null;
 let pendingSlides=[]; // [{name, size, data (base64)}]
 let currentUser=null,userRole=null,agencyId=null,userClientId=null,agencyName='',agencyData={};
 let teamMembers=[],pendingInvites=[],onboardLogoFile=null,settingsLogoFile=null;
+let aiDraftItems=[],aiImportMonth='',aiDragId=null;
+let clientListFilter='ativos';
 let authMode='login';
 let approvalSlideIdx=0;
 let generalYr=new Date().getFullYear(),generalMo=new Date().getMonth(),generalTaskFilter='all';
@@ -948,7 +1078,11 @@ async function enterApp(){
   await loadClients();
   await loadEvents();
   if(isAdmin())await loadTeam();
-  activeClientId=isClientUser()?userClientId:(clients.length?clients[0].id:null);
+  if(isClientUser())activeClientId=userClientId;
+  else{
+    const actives=activeClients();
+    activeClientId=actives.length?actives[0].id:null;
+  }
   document.getElementById('loginScreen').style.display='none';
   document.getElementById('onboardScreen').style.display='none';
   document.getElementById('inviteScreen').style.display='none';
@@ -981,7 +1115,10 @@ function applyRoleUI(){
   const reports=document.getElementById('sb-reports');
   if(reports)reports.style.display=client?'none':'';
   document.querySelectorAll('.toolbar-r .btn-primary').forEach(b=>b.style.display=canEditContent()?'':'none');
+  document.querySelectorAll('.toolbar-r .btn-ai').forEach(b=>b.style.display=canEditContent()?'':'none');
   document.querySelectorAll('.toolbar-r .btn-ghost').forEach(b=>b.style.display=client?'none':'');
+  const aiSb=document.getElementById('sb-ai-import');
+  if(aiSb)aiSb.style.display=canEditContent()?'':'none';
 }
 
 // ── NAVEGAÇÃO ──
@@ -1166,7 +1303,28 @@ async function loadClients(){
       const snap=await getDocs(query(collection(db,'agencies',agencyId,'clients'),orderBy('createdAt')));
       clients=snap.docs.map(d=>({id:d.id,...d.data()}));
     }
+    clients=clients.map(c=>({...c,status:c.status==='arquivado'?'arquivado':'ativo'}));
   }catch(e){console.error(e);clients=[];}
+}
+
+function isClientActive(c){return !!c&&c.status!=='arquivado';}
+function activeClients(){return clients.filter(isClientActive);}
+function archivedClients(){return clients.filter(c=>c.status==='arquivado');}
+function settingsFilteredClients(){
+  if(clientListFilter==='arquivados')return archivedClients();
+  if(clientListFilter==='todos')return clients.slice();
+  return activeClients();
+}
+function activeClientIds(){return new Set(activeClients().map(c=>c.id));}
+function eventsOfActiveClients(){
+  const ids=activeClientIds();
+  return events.filter(e=>ids.has(e.clientId));
+}
+function ensureActiveClientSelection(){
+  if(isClientUser())return;
+  if(activeClientId&&isClientActive(clientById(activeClientId)))return;
+  const actives=activeClients();
+  activeClientId=actives.length?actives[0].id:null;
 }
 
 async function loadEvents(){
@@ -1201,7 +1359,7 @@ function clientColor(id){const c=clientById(id);return (c&&c.color)||'#0ea5e9';}
 function renderTabs(){
   const wrap=document.getElementById('profileTabs');
   wrap.innerHTML='';
-  clients.forEach(c=>{
+  activeClients().forEach(c=>{
     const b=document.createElement('button');
     b.className='ptab'+(c.id===activeClientId?' active':'');
     const dot=document.createElement('span');
@@ -1221,6 +1379,7 @@ function renderTabs(){
 }
 
 window.selectClient=(id)=>{
+  if(!isClientUser()&&!isClientActive(clientById(id)))return;
   activeClientId=id;fstatus='all';
   setSbActive(document.getElementById('sb-all'));
   showView('calendar');
@@ -1263,6 +1422,9 @@ window.openClientModal=(id=null)=>{
   document.getElementById('cName').value=c?.name||'';
   document.getElementById('cEmail').value=c?.email||'';
   document.getElementById('cDriveUrl').value=c?.driveUrl||'';
+  const extra=document.getElementById('clientModalExtra');
+  if(c&&isClientActive(c)){extra.style.display='block';}
+  else{extra.style.display='none';}
   document.getElementById('clientOverlay').classList.add('open');
 };
 window.closeClientModal=()=>{document.getElementById('clientOverlay').classList.remove('open');editingClientId=null;};
@@ -1288,10 +1450,10 @@ window.saveClient=async()=>{
       showToast(inviteSent?'Cliente atualizado!':'Cliente atualizado; não foi possível enviar o convite.');
     }else{
       const color=CLIENT_COLORS[clients.length%CLIENT_COLORS.length];
-      const ref=await addDoc(collection(db,'agencies',agencyId,'clients'),{name,email:email||null,driveUrl:driveUrl||null,color,createdAt:new Date().toISOString()});
+      const ref=await addDoc(collection(db,'agencies',agencyId,'clients'),{name,email:email||null,driveUrl:driveUrl||null,color,status:'ativo',archivedAt:null,createdAt:new Date().toISOString()});
       let inviteSent=true;
       if(email){try{await createAndSendInvite({email,role:'client',type:'client',clientId:ref.id});}catch(e){inviteSent=false;console.error(e);}}
-      clients.push({id:ref.id,name,email:email||null,driveUrl:driveUrl||null,color});
+      clients.push({id:ref.id,name,email:email||null,driveUrl:driveUrl||null,color,status:'ativo',archivedAt:null});
       if(!activeClientId)activeClientId=ref.id;
       closeClientModal();renderTabs();render();
       showToast(inviteSent?'Cliente criado e convite enviado!':'Cliente criado; não foi possível enviar o convite.');
@@ -1363,7 +1525,7 @@ function renderCal(){
     const monthNumStr=String(mo+1).padStart(2,'0');
     const dateStr=`${yr}-${monthNumStr}-${dayStr}`;
     const dayEvents=filtered.filter(ev=>ev.date===dateStr);
-    const showExample=!isClientUser()&&events.length===0&&isCurrentMonth&&todayDate.getDate()===dayNum;
+    const showExample=!isClientUser()&&eventsOfActiveClients().length===0&&isCurrentMonth&&todayDate.getDate()===dayNum;
 
     const cell=document.createElement('div');
     const isTodayCell=isCurrentMonth&&todayDate.getDate()===dayNum;
@@ -1451,6 +1613,7 @@ function renderGeneralCalendar(){
   const monthStr=`${generalYr}-${String(generalMo+1).padStart(2,'0')}`;
   const filtered=events.filter(ev=>{
     if(!ev.date||!ev.date.startsWith(monthStr))return false;
+    if(!activeClientIds().has(ev.clientId))return false;
     if(generalTaskFilter==='all')return true;
     if(generalTaskFilter==='aguardando')return ev.status==='aguardando';
     return eventTaskType(ev)===generalTaskFilter;
@@ -1532,8 +1695,9 @@ function driveIconSvg(){
 
 function renderFiles(){
   const grid=document.getElementById('fileGrid');grid.innerHTML='';
-  if(!clients.length){grid.innerHTML='<div class="empty-msg" style="grid-column:1/-1;padding:40px 0">Nenhum cliente cadastrado.</div>';return;}
-  clients.forEach(c=>{
+  const list=activeClients();
+  if(!list.length){grid.innerHTML='<div class="empty-msg" style="grid-column:1/-1;padding:40px 0">Nenhum cliente ativo.</div>';return;}
+  list.forEach(c=>{
     const card=document.createElement('div');card.className='drive-card';
     card.innerHTML=`<div class="drive-card-head">${driveIconSvg()}<h3></h3></div><p></p><div class="settings-actions"></div>`;
     card.querySelector('h3').textContent=c.name;
@@ -1623,27 +1787,80 @@ function renderSettings(){
       </section>
 
       <section class="settings-section">
-        <h2>Clientes</h2><p class="section-desc">Edite dados de acesso e links do Drive.</p>
+        <h2>Clientes</h2><p class="section-desc">Gerencie clientes ativos e inativos, acessos e links do Drive.</p>
+        <div class="client-filters">
+          <button class="client-filter ${clientListFilter==='ativos'?'active':''}" onclick="setClientListFilter('ativos')">Ativos</button>
+          <button class="client-filter ${clientListFilter==='arquivados'?'active':''}" onclick="setClientListFilter('arquivados')">Arquivados</button>
+          <button class="client-filter ${clientListFilter==='todos'?'active':''}" onclick="setClientListFilter('todos')">Todos</button>
+        </div>
         <div id="settingsClients"></div>
         <button class="btn-ghost" onclick="openClientModal()">＋ Novo Cliente</button>
       </section>
     </div>`;
   renderTeamSettings();
+  renderSettingsClients();
+}
+
+function renderSettingsClients(){
   const list=document.getElementById('settingsClients');
-  clients.forEach(c=>{
-    const row=document.createElement('div');row.className='settings-row';
-    const name=document.createElement('span');name.textContent=c.name;
-    const actions=document.createElement('span');actions.className='settings-actions';
-    const meta=document.createElement('span');meta.className='k';meta.textContent=c.driveUrl?'Drive configurado':(c.email||'sem e-mail');
-    actions.appendChild(meta);
-    if(c.email){
-      const resend=document.createElement('button');resend.className='btn-ghost';resend.textContent='Reenviar convite';resend.onclick=()=>resendClientInvite(c.id);
-      actions.appendChild(resend);
+  if(!list)return;
+  list.innerHTML='';
+  const filtered=settingsFilteredClients();
+  if(!filtered.length){
+    list.innerHTML=`<div class="empty-msg">${clientListFilter==='arquivados'?'Nenhum cliente arquivado.':clientListFilter==='todos'?'Nenhum cliente cadastrado.':'Nenhum cliente ativo.'}</div>`;
+    return;
+  }
+  filtered.forEach(c=>{
+    const row=document.createElement('div');row.className='client-row';
+    const info=document.createElement('div');info.className='client-row-info';
+    const title=document.createElement('b');
+    title.appendChild(document.createTextNode(c.name));
+    if(!isClientActive(c)){
+      const badge=document.createElement('span');badge.className='badge-archived';badge.textContent='Arquivado';
+      title.appendChild(badge);
     }
-    const edit=document.createElement('button');edit.className='btn-ghost';edit.textContent='Editar';edit.onclick=()=>openClientModal(c.id);
-    actions.appendChild(edit);row.append(name,actions);list.appendChild(row);
+    const meta=document.createElement('span');
+    if(!isClientActive(c)&&c.archivedAt){
+      const d=new Date(c.archivedAt);
+      meta.textContent=`Arquivado em ${isNaN(d.getTime())?'—':d.toLocaleDateString('pt-BR')}`+(c.email?` · ${c.email}`:'');
+    }else{
+      meta.textContent=c.driveUrl?'Drive configurado':(c.email||'sem e-mail');
+    }
+    info.append(title,meta);
+    const actions=document.createElement('span');actions.className='settings-actions';
+    if(isClientActive(c)){
+      if(c.email){
+        const resend=document.createElement('button');resend.className='btn-ghost';resend.textContent='Reenviar convite';resend.onclick=()=>resendClientInvite(c.id);
+        actions.appendChild(resend);
+      }
+      const edit=document.createElement('button');edit.className='btn-ghost';edit.textContent='Editar';edit.onclick=()=>openClientModal(c.id);
+      actions.appendChild(edit);
+    }else{
+      const reactivate=document.createElement('button');reactivate.className='btn-ghost';reactivate.textContent='Reativar';reactivate.onclick=()=>reactivateClient(c.id);
+      actions.appendChild(reactivate);
+    }
+    const menuWrap=document.createElement('div');menuWrap.className='client-menu-wrap';
+    const more=document.createElement('button');more.className='btn-more';more.type='button';more.textContent='⋯';more.setAttribute('aria-label','Mais opções');
+    more.onclick=(e)=>{e.stopPropagation();toggleClientMenu(c.id);};
+    const menu=document.createElement('div');menu.className='client-menu';menu.id=`client-menu-${c.id}`;
+    if(isClientActive(c)){
+      const archiveBtn=document.createElement('button');archiveBtn.type='button';archiveBtn.textContent='Arquivar';archiveBtn.onclick=()=>archiveClient(c.id);
+      menu.appendChild(archiveBtn);
+    }else{
+      const delBtn=document.createElement('button');delBtn.type='button';delBtn.className='danger';delBtn.textContent='Excluir';delBtn.onclick=()=>openDeleteClient(c.id);
+      menu.appendChild(delBtn);
+    }
+    menuWrap.append(more,menu);
+    actions.appendChild(menuWrap);
+    row.append(info,actions);
+    list.appendChild(row);
   });
 }
+
+window.setClientListFilter=(value)=>{
+  clientListFilter=value;
+  renderSettings();
+};
 
 function renderTeamSettings(){
   const list=document.getElementById('teamList');if(!list)return;list.innerHTML='';
@@ -1769,6 +1986,103 @@ window.removeTeamMember=async(uid)=>{
     renderSettings();showToast('Acesso removido.');
   }catch(e){console.error(e);alert('Não foi possível remover o colaborador.');}
 };
+
+function closeAllClientMenus(){
+  document.querySelectorAll('.client-menu.open').forEach(m=>m.classList.remove('open'));
+}
+window.toggleClientMenu=(id)=>{
+  const menu=document.getElementById(`client-menu-${id}`);
+  if(!menu)return;
+  const wasOpen=menu.classList.contains('open');
+  closeAllClientMenus();
+  if(!wasOpen)menu.classList.add('open');
+};
+document.addEventListener('click',()=>closeAllClientMenus());
+
+window.archiveClient=async(id)=>{
+  if(!isAdmin())return;
+  const c=clientById(id);
+  if(!c||!isClientActive(c))return;
+  closeAllClientMenus();
+  if(!confirm(`Arquivar ${c.name}? O histórico permanece salvo.`))return;
+  try{
+    const archivedAt=new Date().toISOString();
+    await updateDoc(doc(db,'agencies',agencyId,'clients',id),{status:'arquivado',archivedAt,updatedAt:archivedAt});
+    Object.assign(c,{status:'arquivado',archivedAt});
+    ensureActiveClientSelection();
+    closeClientModal();
+    renderTabs();render();
+    showToast(`${c.name} arquivado.`);
+  }catch(e){console.error(e);alert('Não foi possível arquivar o cliente.');}
+};
+window.archiveClientFromModal=()=>{
+  if(editingClientId)archiveClient(editingClientId);
+};
+window.reactivateClient=async(id)=>{
+  if(!isAdmin())return;
+  const c=clientById(id);
+  if(!c||isClientActive(c))return;
+  closeAllClientMenus();
+  try{
+    const updatedAt=new Date().toISOString();
+    await updateDoc(doc(db,'agencies',agencyId,'clients',id),{status:'ativo',archivedAt:null,updatedAt});
+    Object.assign(c,{status:'ativo',archivedAt:null});
+    if(!activeClientId)activeClientId=id;
+    renderTabs();render();
+    showToast(`${c.name} reativado.`);
+  }catch(e){console.error(e);alert('Não foi possível reativar o cliente.');}
+};
+window.openDeleteClient=(id)=>{
+  if(!isAdmin())return;
+  const c=clientById(id);
+  if(!c||isClientActive(c)){alert('Só é possível excluir clientes arquivados.');return;}
+  closeAllClientMenus();
+  deletingClientId=id;
+  document.getElementById('deleteClientWarn').innerHTML=
+    `Tem certeza? Esta ação não pode ser desfeita. Todo o histórico de <b>${escapeAttr(c.name)}</b> será perdido.`;
+  document.getElementById('deleteClientOverlay').classList.add('open');
+};
+window.closeDeleteClient=()=>{
+  document.getElementById('deleteClientOverlay').classList.remove('open');
+  deletingClientId=null;
+};
+window.confirmDeleteClient=async()=>{
+  if(!isAdmin()||!deletingClientId)return;
+  const id=deletingClientId;
+  const c=clientById(id);
+  if(!c||isClientActive(c)){closeDeleteClient();return;}
+  const btn=document.getElementById('btnConfirmDeleteClient');
+  btn.disabled=true;btn.textContent='Excluindo…';
+  try{
+    const evSnap=await getDocs(query(collection(db,'agencies',agencyId,'events'),where('clientId','==',id)));
+    await Promise.all(evSnap.docs.map(d=>deleteDoc(d.ref)));
+    events=events.filter(e=>e.clientId!==id);
+
+    try{
+      const invSnap=await getDocs(query(collection(db,'invites'),where('agencyId','==',agencyId)));
+      await Promise.all(invSnap.docs.filter(d=>d.data().clientId===id).map(d=>deleteDoc(d.ref)));
+    }catch(e){console.error(e);}
+
+    try{
+      const userSnap=await getDocs(query(collection(db,'users'),where('agencyId','==',agencyId)));
+      await Promise.all(userSnap.docs
+        .filter(d=>d.data().role==='client'&&d.data().clientId===id)
+        .map(d=>updateDoc(d.ref,{status:'removed',updatedAt:new Date().toISOString()})));
+    }catch(e){console.error(e);}
+
+    await deleteDoc(doc(db,'agencies',agencyId,'clients',id));
+    clients=clients.filter(x=>x.id!==id);
+    ensureActiveClientSelection();
+    closeDeleteClient();
+    renderTabs();render();
+    showToast(`${c.name} excluído permanentemente.`);
+  }catch(e){
+    console.error(e);
+    alert('Erro ao excluir o cliente. Tente novamente.');
+  }finally{
+    btn.disabled=false;btn.textContent='Excluir permanentemente';
+  }
+};
 window.integrationSoon=()=>alert('Esta integração estará disponível em uma próxima versão.');
 
 // ── DASHBOARD ──
@@ -1803,7 +2117,8 @@ function upcomingDates(){
 
 // Abre a lista de conteúdos já filtrada por status, indo ao cliente do primeiro item
 window.dashGo=(status)=>{
-  const ev=events.find(e=>e.status===status);
+  const activeIds=activeClientIds();
+  const ev=events.find(e=>e.status===status&&activeIds.has(e.clientId));
   if(ev&&ev.clientId!==activeClientId){activeClientId=ev.clientId;renderTabs();}
   fstatus=status;
   setSbActive(document.getElementById('sb-'+status));
@@ -1818,12 +2133,14 @@ function renderDashboard(){
   document.getElementById('dashGreet').textContent=`${sauda}, ${agencyName||currentUser?.email?.split('@')[0]||''}`;
   document.getElementById('dashDate').textContent=now.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'});
 
-  const aguard=events.filter(e=>e.status==='aguardando');
+  const actives=activeClients();
+  const activeEv=eventsOfActiveClients();
+  const aguard=activeEv.filter(e=>e.status==='aguardando');
   const vencemHoje=aguard.filter(e=>approvalDeadlineISO(e)===today);
   const aprovacoesAtrasadas=aguard.filter(e=>approvalDeadlineISO(e)&&approvalDeadlineISO(e)<today);
-  const ajustes=events.filter(e=>e.status==='ajuste');
+  const ajustes=activeEv.filter(e=>e.status==='ajuste');
   const ajustesVelhos=ajustes.filter(e=>ajusteDays(e)>=1);
-  const aprovadosMes=events.filter(e=>(e.status==='aprovado'||e.status==='publicado')&&e.date&&e.date.startsWith(ms));
+  const aprovadosMes=activeEv.filter(e=>(e.status==='aprovado'||e.status==='publicado')&&e.date&&e.date.startsWith(ms));
 
   // Banner de alerta
   const banner=document.getElementById('dashBanner');
@@ -1853,7 +2170,7 @@ function renderDashboard(){
       ?'<span class="metric-context attention">Ajustes recentes</span>'
       :'<span class="metric-context ok">Nenhum ajuste pendente</span>';
   document.getElementById('dashMetrics').innerHTML=`
-    <div class="dash-metric" onclick="navView('settings',document.getElementById('sb-settings'))"><div class="n">${clients.length}</div><div class="lb">Clientes ativos</div><span class="metric-context ok">Base da agência</span></div>
+    <div class="dash-metric" onclick="navView('settings',document.getElementById('sb-settings'))"><div class="n">${actives.length}</div><div class="lb">Clientes ativos</div><span class="metric-context ok">Base da agência</span></div>
     <div class="dash-metric" onclick="dashGo('aguardando')"><div class="n">${aguard.length}</div><div class="lb">Aguardando aprovação</div>${aguardCtx}</div>
     <div class="dash-metric" onclick="dashGo('ajuste')"><div class="n">${ajustes.length}</div><div class="lb">Com ajuste pendente</div>${ajusteCtx}</div>
     <div class="dash-metric" onclick="dashGo('aprovado')"><div class="n">${aprovadosMes.length}</div><div class="lb">Aprovados este mês</div><span class="metric-context ok">Fluxo concluído</span></div>`;
@@ -1872,19 +2189,19 @@ function renderDashboard(){
   });
   const in3=new Date(now);in3.setDate(now.getDate()+3);
   const in3s=`${in3.getFullYear()}-${String(in3.getMonth()+1).padStart(2,'0')}-${String(in3.getDate()).padStart(2,'0')}`;
-  events.forEach(e=>{
+  activeEv.forEach(e=>{
     if(!e.date||used.has(e.id))return;
     const semMaterial=!(e.slides||[]).length&&!e.caption;
     if(e.date>today&&e.date<=in3s&&(e.status==='producao'||(e.status==='aguardando'&&semMaterial))){
       dem.push({lvl:'blue',ev:e,t:`Pendente: ${e.title}`,m:`${clientName(e.clientId)} · prazo ${fmtDM(e.date)}`});used.add(e.id);
     }
   });
-  events.forEach(e=>{
+  activeEv.forEach(e=>{
     if(e.date===today&&!used.has(e.id)&&!['aprovado','publicado'].includes(e.status)){
       dem.push({lvl:'yellow',ev:e,t:`Hoje: ${e.title}`,m:`${clientName(e.clientId)}${e.time?' · '+e.time:''}`});used.add(e.id);
     }
   });
-  events.forEach(e=>{
+  activeEv.forEach(e=>{
     if(e.status==='aprovado'&&e.date&&e.date<=today&&!used.has(e.id)){
       dem.push({lvl:'green',ev:e,t:`Publicar: ${e.title}`,m:`${clientName(e.clientId)} · aprovado, pronto para enviar`});used.add(e.id);
     }
@@ -1910,9 +2227,9 @@ function renderDashboard(){
 
   // Progresso dos clientes (criados vs agendados no mês)
   const prog=document.getElementById('dashProgress');prog.innerHTML='';
-  if(!clients.length)prog.innerHTML='<div class="empty-msg">Nenhum cliente cadastrado</div>';
-  clients.forEach(c=>{
-    const evs=events.filter(e=>e.clientId===c.id&&e.date&&e.date.startsWith(ms));
+  if(!actives.length)prog.innerHTML='<div class="empty-msg">Nenhum cliente ativo</div>';
+  actives.forEach(c=>{
+    const evs=activeEv.filter(e=>e.clientId===c.id&&e.date&&e.date.startsWith(ms));
     const done=evs.filter(e=>['aguardando','revisao','aprovado','publicado'].includes(e.status)).length;
     const pct=evs.length?Math.round(done/evs.length*100):0;
     const row=document.createElement('div');row.className='prog-row';
@@ -1931,19 +2248,19 @@ function renderDashboard(){
     .sort((a,b)=>a.diff-b.diff);
   for(const holi of proximas){
     const hs=`${holi.date.getFullYear()}-${String(holi.date.getMonth()+1).padStart(2,'0')}-${String(holi.date.getDate()).padStart(2,'0')}`;
-    const semPost=clients.find(c=>!events.some(e=>e.clientId===c.id&&e.date===hs));
+    const semPost=actives.find(c=>!activeEv.some(e=>e.clientId===c.id&&e.date===hs));
     if(semPost){
       sugs.push({html:`<b>${holi.name}</b> é em ${fmtDM(hs)} e <b>${semPost.name}</b> ainda não tem conteúdo agendado para a data.`,go:()=>selectClient(semPost.id)});
       break;
     }
   }
   const times={};
-  events.filter(e=>(e.status==='aprovado'||e.status==='publicado')&&e.time).forEach(e=>{const hh=e.time.slice(0,2);times[hh]=(times[hh]||0)+1;});
+  activeEv.filter(e=>(e.status==='aprovado'||e.status==='publicado')&&e.time).forEach(e=>{const hh=e.time.slice(0,2);times[hh]=(times[hh]||0)+1;});
   const best=Object.entries(times).sort((a,b)=>b[1]-a[1])[0];
   if(best&&best[1]>=2)sugs.push({html:`Seus conteúdos aprovados saem com mais frequência às <b>${best[0]}h</b> — mantenha esse horário nos próximos agendamentos.`});
   else sugs.push({html:`Posts entre <b>18h e 21h</b> costumam ter melhor alcance no Instagram — experimente agendar nesse intervalo.`});
-  const top=clients
-    .map(c=>({c,n:events.filter(e=>e.clientId===c.id&&(e.status==='aprovado'||e.status==='publicado')&&e.date&&e.date.startsWith(ms)).length}))
+  const top=actives
+    .map(c=>({c,n:activeEv.filter(e=>e.clientId===c.id&&(e.status==='aprovado'||e.status==='publicado')&&e.date&&e.date.startsWith(ms)).length}))
     .sort((a,b)=>b.n-a.n)[0];
   if(top&&top.n>0)sugs.push({html:`O relatório de ${MONTHS[now.getMonth()]} de <b>${top.c.name}</b> já tem ${top.n} conteúdo${top.n>1?'s':''} aprovado${top.n>1?'s':''} — pronto para enviar.`,go:()=>{activeClientId=top.c.id;renderTabs();setSbActive(document.getElementById('sb-reports'));showView('reports');render();}});
   const fillers=[
@@ -2331,9 +2648,270 @@ window.mfStatus=(val,el)=>{
   showView('content');render();
 };
 
-['addOverlay','approvalOverlay','clientOverlay','teamInviteOverlay'].forEach(id=>{
+['addOverlay','approvalOverlay','clientOverlay','teamInviteOverlay','aiImportOverlay','deleteClientOverlay'].forEach(id=>{
   document.getElementById(id).addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
 });
+
+// ── IMPORTAR PAUTA COM IA ──
+const FORMATO_LABEL={feed:'Feed',carrossel:'Carrossel',reels:'Reels',stories:'Stories',video:'Vídeo',artigo:'Artigo'};
+
+function showAiErr(msg){
+  const err=document.getElementById('aiImportErr');
+  if(!msg){err.style.display='none';err.textContent='';return;}
+  err.textContent=msg;err.style.display='block';
+}
+function setAiStep(step){
+  document.getElementById('aiStepInput').classList.toggle('active',step==='input');
+  document.getElementById('aiStepPreview').classList.toggle('active',step==='preview');
+  document.getElementById('aiModalTitle').textContent=step==='preview'?'Prévia do calendário':'Importar pauta com IA';
+}
+function defaultAiMonthValue(){
+  return `${yr}-${String(mo+1).padStart(2,'0')}`;
+}
+window.openAiImport=()=>{
+  if(!canEditContent())return;
+  if(!activeClientId){openClientModal();return;}
+  aiDraftItems=[];aiImportMonth='';aiDragId=null;
+  showAiErr('');
+  document.getElementById('aiText').value='';
+  document.getElementById('aiPostsPerWeek').value='3';
+  document.getElementById('aiMonth').value=defaultAiMonthValue();
+  document.getElementById('aiFileInput').value='';
+  document.getElementById('aiFileName').style.display='none';
+  document.getElementById('aiFileName').textContent='';
+  setAiStep('input');
+  document.getElementById('aiImportOverlay').classList.add('open');
+};
+window.closeAiImport=()=>{
+  document.getElementById('aiImportOverlay').classList.remove('open');
+  aiDraftItems=[];aiImportMonth='';aiDragId=null;
+};
+window.backToAiInput=()=>{showAiErr('');setAiStep('input');};
+
+async function readTxtFile(file){
+  return await file.text();
+}
+async function loadMammoth(){
+  const mod=await import('https://cdn.jsdelivr.net/npm/mammoth@1.8.0/+esm');
+  return mod.default||mod;
+}
+async function loadPdfJs(){
+  const pdfjsLib=await import('https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.mjs');
+  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs';
+  return pdfjsLib;
+}
+async function readDocxFile(file){
+  const mammoth=await loadMammoth();
+  const buffer=await file.arrayBuffer();
+  const result=await mammoth.extractRawText({arrayBuffer:buffer});
+  return (result.value||'').trim();
+}
+async function readPdfFile(file){
+  const pdfjsLib=await loadPdfJs();
+  const buffer=await file.arrayBuffer();
+  const pdf=await pdfjsLib.getDocument({data:new Uint8Array(buffer)}).promise;
+  const parts=[];
+  for(let i=1;i<=pdf.numPages;i++){
+    const page=await pdf.getPage(i);
+    const content=await page.getTextContent();
+    parts.push(content.items.map(item=>item.str).join(' '));
+  }
+  return parts.join('\n').replace(/\s+\n/g,'\n').trim();
+}
+window.handleAiFile=async(file)=>{
+  if(!file)return;
+  showAiErr('');
+  const name=(file.name||'').toLowerCase();
+  const type=file.type||'';
+  try{
+    let text='';
+    if(name.endsWith('.txt')||type==='text/plain')text=await readTxtFile(file);
+    else if(name.endsWith('.docx')||type.includes('wordprocessingml'))text=await readDocxFile(file);
+    else if(name.endsWith('.pdf')||type==='application/pdf')text=await readPdfFile(file);
+    else{showAiErr('Use um arquivo .txt, .docx ou .pdf.');return;}
+    if(!text){showAiErr('Não foi possível extrair texto deste arquivo.');return;}
+    document.getElementById('aiText').value=text;
+    const label=document.getElementById('aiFileName');
+    label.textContent=`Arquivo carregado: ${file.name}`;
+    label.style.display='block';
+  }catch(e){
+    console.error(e);
+    showAiErr('Erro ao ler o arquivo. Tente outro formato ou cole o texto.');
+  }
+};
+
+(function setupAiDropZone(){
+  const zone=document.getElementById('aiDropZone');
+  if(!zone)return;
+  ['dragenter','dragover'].forEach(ev=>{
+    zone.addEventListener(ev,e=>{e.preventDefault();zone.classList.add('dragover');});
+  });
+  ['dragleave','drop'].forEach(ev=>{
+    zone.addEventListener(ev,e=>{e.preventDefault();zone.classList.remove('dragover');});
+  });
+  zone.addEventListener('drop',e=>{
+    const file=e.dataTransfer?.files?.[0];
+    if(file)handleAiFile(file);
+  });
+})();
+
+window.generateAiCalendar=async()=>{
+  if(!canEditContent()||!activeClientId||!agencyId)return;
+  const text=document.getElementById('aiText').value.trim();
+  const postsPerWeek=Number(document.getElementById('aiPostsPerWeek').value);
+  const month=document.getElementById('aiMonth').value;
+  showAiErr('');
+  if(text.length<20){showAiErr('Informe pelo menos 20 caracteres de conteúdo.');return;}
+  if(!month){showAiErr('Selecione o mês de distribuição.');return;}
+  if(!Number.isFinite(postsPerWeek)||postsPerWeek<1||postsPerWeek>21){showAiErr('Informe entre 1 e 21 posts por semana.');return;}
+  const btn=document.getElementById('btnGenerateAi');
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span> Gerando…';
+  try{
+    const result=await generatePautaCalendarFn({text,month,postsPerWeek,agencyId});
+    const items=result.data?.items||[];
+    if(!items.length)throw new Error('A IA não retornou conteúdos.');
+    aiImportMonth=month;
+    aiDraftItems=items.map((item,idx)=>({
+      id:`ai-${Date.now()}-${idx}`,
+      titulo:item.titulo,
+      descricao:item.descricao||'',
+      data:item.data,
+      formato:item.formato||'feed'
+    }));
+    renderAiPreview();
+    setAiStep('preview');
+  }catch(e){
+    console.error(e);
+    let msg=e?.message||'Não foi possível gerar o calendário.';
+    if(e?.code==='functions/not-found'||/not found/i.test(msg)){
+      msg='A função generatePautaCalendar ainda não foi publicada. Faça o deploy das Cloud Functions.';
+    }else if(e?.code==='functions/failed-precondition'){
+      msg='Configure a ANTHROPIC_API_KEY no Firebase (functions:secrets:set).';
+    }
+    showAiErr(String(msg).replace(/^FirebaseError:\s*/i,''));
+  }finally{
+    btn.disabled=false;btn.textContent='Gerar calendário';
+  }
+};
+
+function renderAiPreview(){
+  const [yy,mm]=aiImportMonth.split('-').map(Number);
+  document.getElementById('aiPreviewMeta').textContent=
+    `${aiDraftItems.length} conteúdo${aiDraftItems.length!==1?'s':''} · ${MONTHS[mm-1]} ${yy} · ${clientName(activeClientId)}`;
+  const grid=document.getElementById('aiPreviewGrid');
+  grid.innerHTML='';
+  const firstDay=new Date(yy,mm-1,1).getDay();
+  const totalDays=new Date(yy,mm,0).getDate();
+  const byDay={};
+  aiDraftItems.forEach(item=>{
+    const day=Number(String(item.data).slice(-2));
+    if(!byDay[day])byDay[day]=[];
+    byDay[day].push(item);
+  });
+  for(let i=0;i<firstDay;i++){
+    const empty=document.createElement('div');empty.className='ai-day empty';grid.appendChild(empty);
+  }
+  for(let day=1;day<=totalDays;day++){
+    const cell=document.createElement('div');cell.className='ai-day';
+    cell.dataset.date=`${aiImportMonth}-${String(day).padStart(2,'0')}`;
+    const num=document.createElement('div');num.className='ai-day-num';num.textContent=day;
+    cell.appendChild(num);
+    (byDay[day]||[]).forEach(item=>{
+      const card=document.createElement('div');
+      card.className='ai-card';card.draggable=true;card.dataset.id=item.id;
+      card.innerHTML=`<span class="fmt">${FORMATO_LABEL[item.formato]||item.formato}</span>${item.titulo}`;
+      card.title=item.descricao||item.titulo;
+      card.addEventListener('dragstart',e=>{
+        aiDragId=item.id;
+        e.dataTransfer.setData('text/plain',item.id);
+        e.dataTransfer.effectAllowed='move';
+      });
+      card.addEventListener('dragend',()=>{aiDragId=null;});
+      cell.appendChild(card);
+    });
+    cell.addEventListener('dragover',e=>{e.preventDefault();cell.classList.add('drop-target');});
+    cell.addEventListener('dragleave',()=>cell.classList.remove('drop-target'));
+    cell.addEventListener('drop',e=>{
+      e.preventDefault();cell.classList.remove('drop-target');
+      const id=e.dataTransfer.getData('text/plain')||aiDragId;
+      const target=aiDraftItems.find(x=>x.id===id);
+      if(!target)return;
+      target.data=cell.dataset.date;
+      renderAiPreview();
+    });
+    grid.appendChild(cell);
+  }
+  const list=document.getElementById('aiPreviewList');
+  list.innerHTML='';
+  [...aiDraftItems].sort((a,b)=>a.data.localeCompare(b.data)).forEach(item=>{
+    const row=document.createElement('div');row.className='ai-list-item';
+    const left=document.createElement('div');
+    const title=document.createElement('b');title.textContent=item.titulo;
+    const meta=document.createElement('span');
+    meta.textContent=`${item.data.slice(8)}/${item.data.slice(5,7)} · ${FORMATO_LABEL[item.formato]||item.formato}`;
+    left.append(title,meta);
+    if(item.descricao){
+      const desc=document.createElement('span');desc.style.display='block';desc.style.marginTop='4px';
+      desc.textContent=item.descricao.length>140?item.descricao.slice(0,140)+'…':item.descricao;
+      left.appendChild(desc);
+    }
+    row.appendChild(left);
+    list.appendChild(row);
+  });
+}
+
+window.confirmAiCalendar=async()=>{
+  if(!canEditContent()||!activeClientId||!agencyId||!aiDraftItems.length)return;
+  const btn=document.getElementById('btnConfirmAi');
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span> Salvando…';
+  showAiErr('');
+  try{
+    const now=new Date();
+    const deadlineDays=agencyData.approval?.defaultDeadlineDays||2;
+    const approvalDeadline=new Date(now.getTime()+deadlineDays*86400000).toISOString();
+    const created=[];
+    for(const item of aiDraftItems){
+      const ev={
+        title:item.titulo,
+        date:item.data,
+        clientId:activeClientId,
+        event_type:'post',
+        status:'aguardando',
+        taskType:'criar',
+        time:null,
+        notes:null,
+        canal:'instagram',
+        video:null,
+        formato:item.formato||'feed',
+        caption:item.descricao||null,
+        hashtags:null,
+        pauta:item.descricao||null,
+        slides:[],
+        comments:[],
+        revisionCount:0,
+        statusChangedAt:now.toISOString(),
+        approvalDeadline,
+        source:'ai_import'
+      };
+      const ref=await addDoc(collection(db,'agencies',agencyId,'events'),ev);
+      created.push({id:ref.id,...ev});
+    }
+    events.push(...created);
+    events.sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+    const [yy,mm]=aiImportMonth.split('-').map(Number);
+    if(yy&&mm){yr=yy;mo=mm-1;}
+    closeAiImport();
+    setSbActive(document.getElementById('sb-calendar'));
+    showView('calendar');
+    render();
+    showToast(`${created.length} conteúdo${created.length!==1?'s':''} adicionado${created.length!==1?'s':''} ao calendário!`);
+  }catch(e){
+    console.error(e);
+    showAiErr('Erro ao salvar os conteúdos. Tente novamente.');
+  }finally{
+    btn.disabled=false;btn.textContent='Confirmar e salvar no calendário';
+  }
+};
 </script>
 
 <div class="toast" id="toast"></div>
