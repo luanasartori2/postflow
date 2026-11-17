@@ -15,12 +15,11 @@ const SCOPES = [
 let cachedToken = null;
 
 function serviceAccount() {
-  const sa = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT || '{}');
-  if (!sa.client_email || !sa.private_key || !sa.project_id) {
+  const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT.replace(/\\n/g, '\n'));
+  if (!serviceAccount.client_email || !serviceAccount.private_key || !serviceAccount.project_id) {
     throw new Error('FIREBASE_SERVICE_ACCOUNT inválida ou ausente');
   }
-  sa.private_key = sa.private_key.replace(/\\n/g, '\n');
-  return sa;
+  return serviceAccount;
 }
 
 function base64url(input) {
